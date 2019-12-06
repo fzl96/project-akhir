@@ -319,9 +319,9 @@ void reset()
     {
         remove("total.txt");
         printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DI RESET---!!!!!!!!!!!!!!!!!");
-        file3 = fopen("total2.txt","ab");
-        rename("total2.txt","total.txt");
-        fclose(file3);
+        //file3 = fopen("total2.txt","ab");
+        //rename("total2.txt","total.txt");
+        //fclose(file3);
         printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . . ");
         getch();
         system("cls");
