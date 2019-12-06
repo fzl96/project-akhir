@@ -229,33 +229,6 @@ void addmenu()
     mainmenu();
 }
 
-//Fungsi untuk menampilkan daftar menu dalam fungsi calculate
-void displaymenu2()
-{
-    char menu[100][100] = 
-    {
-        "",
-        "Nasi Goreng    ",
-        "Mie Goreng     ",
-        "Mie Rebus      ",
-        "Minas          ",
-        "Sup            ",
-        "Teh            ",
-        "Teh Es         ",
-        "Kopi           ",
-        "Kopi Es        ",
-        "Juice          "
-    };
-    printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb Program Kasir \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-    printf("\n\t\t\t\t\xdb Code\t\tNama Item\t\t\xdb\n\n");
-    for (int i = 1; i < 11; i++)
-    {
-        printf("\t\t\t\t\xdb %d\t\t%s\t\t\xdb\n\n", i, menu[i]);
-    }
-    printf("\t\t\t\t\xdb\t\"Masukkan 0 Untuk Selesai\"\t\xdb");
-    printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-}
-
 //Fungsi untuk menampilkan semua daftar menu: Kode item, Nama Item, dan Harga
 void displaymenu()
 {
@@ -275,6 +248,24 @@ void displaymenu()
     getch();
     system("cls");
     mainmenu();
+}
+
+//Fungsi untuk menampilkan daftar menu dalam fungsi calculate
+void displaymenu2()
+{
+    FILE *file;
+    file = fopen("menulist11.txt", "r");
+    printf("\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+    printf("\n\t\t\t\xdb\tCode Item\t\tNama Item\t\xdb");
+    while (fread(&item, sizeof(item), 1, file))
+    {
+        printf("\n\n\t\t\t\xdb\t%d\t\t\t", item.code);
+        printf("%s\t\xdb", item.name);
+    }
+    printf("\n");
+    printf("\n\t\t\t\xdb\tMasukkan \"0\" untuk tampilkan total\t\xdb");
+    printf("\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+    fclose(file);
 }
 
 //Fungsi untuk menampilkan pendapatan dari setiap pelanggan
