@@ -210,7 +210,6 @@ void addmenu()
         fflush(stdin);
         printf("\n\n\t\t\t\t==================== Masukkan nama Item ====================");
         printf("\n\t\t\t\t> ");
-        gets(item.name);
         if (strcmp(item.name, "batalkan") == 0){
             system("cls");
             mainmenu();
