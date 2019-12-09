@@ -30,9 +30,16 @@ typedef struct
     int total;
 } price;
 
+typedef struct
+{
+    char name2[100];
+    int quantity;
+    int total3;
+} history;
+
 price harga;
 menu item;
-
+history sell;
 //fungsi tampilan login
 void login()
 {
@@ -141,9 +148,10 @@ void calculate()
 {
     int code, quantity, total, total2 = 0, money, change;
     char ulang;
-    FILE *file, *file2;
+    FILE *file, *file2, *file3;
     file = fopen("menulist11.txt", "r");
     file2 = fopen("total.txt","a+");
+    file3 = fopen("history.txt", "a+");
     do{
         system("cls");
         displaymenu2();
@@ -164,6 +172,10 @@ void calculate()
                 {
                     total = item.price * quantity;
                     printf("\n\t\t\t\t%s %d = Rp. %d", item.name, quantity, total);
+                    strcpy(sell.name2, item.name);
+                    sell.quantity = quantity;
+                    sell.total3 = total;
+                    fwrite(&sell, sizeof(sell), 1, file3);
                     total2 = total2 + total;
                     break;
                 }
@@ -266,7 +278,7 @@ void displaymenu2()
         printf("%s\t\xdb\n", item.name);
     }
     printf("\n\t\t\t\t\xdb    Masukkan \"0\" untuk hitung total\t\xdb");
-    printf("\n\t\t\t\t\xdb    Masukkan \"100\" untuk keluar\t\xdb");
+    printf("\n\t\t\t\t\xdb    Masukkan \"00\" untuk keluar\t\xdb");
     printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
     printf("\n");
     fclose(file);
@@ -275,13 +287,26 @@ void displaymenu2()
 //Fungsi untuk menampilkan pendapatan dari setiap pelanggan
 void displaytotal()
 {
-    FILE *file2;
+    FILE *file2, *file3;
+    int total_sell = 0;
     file2 = fopen("total.txt","r");
-    while (fread(&harga, sizeof(harga), 1, file2))
+    file3 = fopen("history.txt", "r");
+    // while (fread(&harga, sizeof(harga), 1, file2))
+    // {
+    //     printf("\n\t\t\t\tPendapatan : Rp. %d", harga.total);
+    // }
+    printf("\n\t\t\tNama Item\tJumlah\tTotal");
+    rewind(file3);
+    while (fread(&sell, sizeof(sell), 1, file3))
     {
-        printf("\n\t\t\t\tPendapatan : Rp. %d", harga.total);
+        printf("\n\t\t\t %s\t%d\t= Rp. %d", sell.name2, sell.quantity, sell.total3);
+        // if(EOF)
+        //     printf("Works");
+        total_sell += sell.total3;
     }
+    printf("\n\n\t\t\tTotal = %d", total_sell);
     printf("\n");
+    fclose(file3);
     fclose(file2);
     printf("\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
@@ -289,7 +314,7 @@ void displaytotal()
     mainmenu();
 }
 
-//Fungsu untuk menampilkan jumlah pendapatan dari seluruh pelanggan yang telah dihitung
+//Fungsi untuk menampilkan jumlah pendapatan dari seluruh pelanggan yang telah dihitung
 void totalearn()
 {
     int total_pendapatan = 0;
@@ -311,7 +336,7 @@ void totalearn()
 //Fungsi untuk mereset jumlah pendapatan dan total pendapatan
 void reset()
 {
-    FILE *file2, *file3;
+    // FILE *file2, *file3;
     char reset[10];
     printf("\n\n\n\t\t\t\t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     printf("\n\n\n\t\t\t\t\tReset data (ketik \"reset\" untuk reset)");
@@ -322,10 +347,8 @@ void reset()
     if (strcmp(reset, "reset") == 0)
     {
         remove("total.txt");
+        remove("history.txt");
         printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DI RESET---!!!!!!!!!!!!!!!!!");
-        file3 = fopen("total2.txt","ab");
-        rename("total2.txt","total.txt");
-        fclose(file3);
         printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . . ");
         getch();
         system("cls");
