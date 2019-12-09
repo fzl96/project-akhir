@@ -4,6 +4,7 @@
 #include <string.h>
 #include <windows.h>
 #include <time.h>
+#include <locale.h>
 
 //Fungsi Prototype
 void mainmenu();
@@ -148,10 +149,9 @@ void calculate()
 {
     int code, quantity, total, total2 = 0, money, change;
     char ulang;
-    FILE *file, *file2, *file3;
+    FILE *file, *file2;
     file = fopen("menulist11.txt", "r");
-    file2 = fopen("total.txt","a+");
-    file3 = fopen("history.txt", "ab");
+    file2 = fopen("history.txt", "a+");
     do{
         system("cls");
         displaymenu2();
@@ -175,7 +175,7 @@ void calculate()
                     strcpy(sell.name2, item.name);
                     sell.quantity = quantity;
                     sell.total3 = total;
-                    fwrite(&sell, sizeof(sell), 1, file3);
+                    fwrite(&sell, sizeof(sell), 1, file2);
                     total2 = total2 + total;
                     break;
                 }
@@ -190,14 +190,12 @@ void calculate()
         printf("\n\t\t\t\t=========Kembalian : Rp. %d=========", change);
         harga.total = total2;
         total = 0, total2 = 0;
-        fwrite(&harga, sizeof(harga), 1, file2);
         printf("\n\n\t\t\t\tHitung Lagi (y/n) ? ");
         scanf(" %c", &ulang);
     }while(ulang == 'y' | ulang == 'Y');
 
     fclose(file);
     fclose(file2);
-    fclose(file3);
     printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
     system("cls");
@@ -298,14 +296,13 @@ void displaymenu2()
 //Fungsi untuk menampilkan pendapatan dari setiap pelanggan
 void displaytotal()
 {
-    FILE *file2, *file3;
+    FILE *file2;
     int total_sell = 0, total_quantity = 0;
-    file2 = fopen("total.txt","r");
-    file3 = fopen("history.txt", "r");
+    file2 = fopen("history.txt", "r");
     showtime();
     printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
-    rewind(file3);
-    while (fread(&sell, sizeof(sell), 1, file3))
+    rewind(file2);
+    while (fread(&sell, sizeof(sell), 1, file2))
     {
         printf("\n\t\t\t%s\t", sell.name2);
         if (strlen(sell.name2) < 8)
@@ -316,7 +313,6 @@ void displaytotal()
     }
     printf("\n\n\t\t\t======================================================");
     printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
-    fclose(file3);
     fclose(file2);
     printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
@@ -336,7 +332,6 @@ void reset()
     scanf("%s", reset);
     if (strcmp(reset, "reset") == 0)
     {
-        remove("total.txt");
         remove("history.txt");
         printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DI RESET---!!!!!!!!!!!!!!!!!");
         printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . . ");
