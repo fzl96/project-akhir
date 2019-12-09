@@ -87,58 +87,56 @@ int main()
 //Fungsi tampilan menu utama
 void mainmenu()
 {
-    int choice;
-    printf("\n\n\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t1. Hitung                          \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t2. Tambah Menu                     \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t3. Tampilkan Daftar Menu           \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t4. Tampilkan pendapatan per-order  \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t5. Tampilkan Total pendapatan      \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t6. Reset Total Pendapatan          \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\t7. Keluar                          \t\xdb");
-    printf("\n\t\t\t\xdb\t                                   \t\xdb");
-    printf("\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-    printf("\n\n\t\t\t\tPilih Opsi : ");
-    scanf("%d", &choice);
-    switch (choice)
-    {
-    case 1:
-        system("cls");
-        calculate();
-        break;
-    case 2:
-        system("cls");
-        addmenu();
-        break;
-    case 3:
-        system("cls");
-        displaymenu();
-        break;
-    case 4:
-        system("cls");
-        displaytotal();
-        break;
-    case 5:
-        system("cls");
-        totalearn();
-        break;
-    case 6:
-        system("cls");
-        reset();
-        break;
-    case 7:
-        system("cls");
-        break;
-    default:
-        system("cls");
-        printf("\n\n\n\t\t\t\t\t!!!Menu Tidak ada!!!");
+    while(1){
+        int choice;
+        printf("\n\n\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t1. Hitung                          \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t2. Tambah Menu                     \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t3. Tampilkan Daftar Menu           \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t4. Tampilkan Total dan History     \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t5. Reset Total Pendapatan          \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\t6. Keluar                          \t\xdb");
+        printf("\n\t\t\t\xdb\t                                   \t\xdb");
+        printf("\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+        printf("\n\n\t\t\t\tPilih Opsi : ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            system("cls");
+            calculate();
+            break;
+        case 2:
+            system("cls");
+            addmenu();
+            break;
+        case 3:
+            system("cls");
+            displaymenu();
+            break;
+        case 4:
+            system("cls");
+            displaytotal();
+            break;
+        case 5:
+            system("cls");
+            reset();
+            break;
+        case 6:
+            system("cls");
+            break;
+        default:
+            printf("\n\n\t\t\t\t!!!Menu Tidak ada!!!");
+            getch();
+            system("cls");
+            continue;
+        }
         break;
     }
 }
@@ -249,17 +247,19 @@ void displaymenu()
 {
     FILE *file;
     file = fopen("menulist11.txt", "r");
-    printf("Code Item\t\tNama Item\t\t\tHarga\n");
+    printf("\t\tCode Item\tNama Item\tHarga\n");
+    printf("\t\t_______________________________________________");
     while (fread(&item, sizeof(item), 1, file))
     {
-        printf("\n%d\t\t\t", item.code);
-        printf("%s\t\t\t", item.name);
-        printf("%d", item.price);
+        printf("\n\t\t%d\t\t", item.code);
+        printf("%s\t", item.name);
+        printf("%d ( %dK )", item.price, item.price/1000);
+        printf("\n\t\t_______________________________________________");
     }
 
     printf("\n");
     fclose(file);
-    printf("\n\nTekan apa saja untuk kembali ke menu utama. . .");
+    printf("\n\n\n\n\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
     system("cls");
     mainmenu();
@@ -278,7 +278,7 @@ void displaymenu2()
         printf("%s\t\xdb\n", item.name);
     }
     printf("\n\t\t\t\t\xdb    Masukkan \"0\" untuk hitung total\t\xdb");
-    printf("\n\t\t\t\t\xdb    Masukkan \"00\" untuk keluar\t\xdb");
+    printf("\n\t\t\t\t\xdb    Masukkan \"100\" untuk keluar\t\xdb");
     printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
     printf("\n");
     fclose(file);
@@ -295,38 +295,20 @@ void displaytotal()
     // {
     //     printf("\n\t\t\t\tPendapatan : Rp. %d", harga.total);
     // }
+    showtime();
     printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
     rewind(file3);
     while (fread(&sell, sizeof(sell), 1, file3))
     {
-        printf("\n\t\t\t%s\t%d\t=\tRp. %d", sell.name2, sell.quantity, sell.total3);
+        printf("\n\t\t\t%s\t%d\t=\tRp. %d ( %dK )", sell.name2, sell.quantity, sell.total3, sell.total3/1000);
         total_sell += sell.total3;
         total_quantity += sell.quantity;
     }
     printf("\n\n\t\t\t=============================================");
-    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d",total_quantity, total_sell);
+    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d ( %dK)",total_quantity, total_sell, total_sell/1000);
     fclose(file3);
     fclose(file2);
     printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
-    getch();
-    system("cls");
-    mainmenu();
-}
-
-//Fungsi untuk menampilkan jumlah pendapatan dari seluruh pelanggan yang telah dihitung
-void totalearn()
-{
-    int total_pendapatan = 0;
-    FILE *file2;
-    file2 = fopen("total.txt","r");
-    while (fread(&harga, sizeof(harga), 1, file2))
-    {
-        total_pendapatan = total_pendapatan + harga.total;
-    }
-    showtime();
-    printf("\n\n\t\t\t\t======Total Pendapatan Sejauh ini adalah: Rp. %d======", total_pendapatan);
-    fclose(file2);
-    printf("\n\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
     system("cls");
     mainmenu();
@@ -372,5 +354,5 @@ void showtime()
 
   time (&rawtime);
   timeinfo = localtime (&rawtime);
-  printf ("\n\n\t\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+  printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
 }
