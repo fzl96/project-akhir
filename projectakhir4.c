@@ -266,6 +266,7 @@ void displaymenu2()
         printf("%s\t\xdb\n", item.name);
     }
     printf("\n\t\t\t\t\xdb    Masukkan \"0\" untuk hitung total\t\xdb");
+    printf("\n\t\t\t\t\xdb    Masukkan \"100\" untuk keluar\t\xdb");
     printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
     printf("\n");
     fclose(file);
