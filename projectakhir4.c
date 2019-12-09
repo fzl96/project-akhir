@@ -249,14 +249,16 @@ void displaymenu()
 {
     FILE *file;
     file = fopen("menulist11.txt", "r");
-    printf("\t\tCode Item\tNama Item\tHarga\n");
-    printf("\t\t_______________________________________________");
+    printf("\t\tCode Item\t\tNama Item\t\tHarga\n");
+    printf("\t\t______________________________________________________________");
     while (fread(&item, sizeof(item), 1, file))
     {
-        printf("\n\t\t%d\t\t", item.code);
-        printf("%s\t", item.name);
+        printf("\n\t\t%d\t\t\t", item.code);
+        printf("%s\t\t", item.name);
+        if (strlen(item.name) < 8)
+            printf("\t");
         printf("%d ( %dK )", item.price, item.price/1000);
-        printf("\n\t\t_______________________________________________");
+        printf("\n\t\t______________________________________________________________");
     }
 
     printf("\n");
