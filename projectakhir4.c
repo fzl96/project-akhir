@@ -213,14 +213,17 @@ void addmenu()
         printf("\n\n\n\t\t\t\t==================== Masukkan Code Item ====================");
         printf("\n\t\t\t\t> ");
         scanf("%d", &item.code);
-        if (item.code == 0){
+        if (item.code == 0)
+        {
             system("cls");
             mainmenu();
         }
         fflush(stdin);
         printf("\n\n\t\t\t\t==================== Masukkan nama Item ====================");
         printf("\n\t\t\t\t> ");
-        if (strcmp(item.name, "batalkan") == 0){
+        gets(item.name);
+        if (strcmp(item.name, "batalkan") == 0)
+        {
             system("cls");
             mainmenu();
         }
@@ -241,7 +244,6 @@ void addmenu()
     system("cls");
     mainmenu();
 }
-
 //Fungsi untuk menampilkan semua daftar menu: Kode item, Nama Item, dan Harga
 void displaymenu()
 {
