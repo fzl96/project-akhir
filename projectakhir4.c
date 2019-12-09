@@ -16,7 +16,7 @@ void totalearn();
 void reset();
 void showtime();
 
-//Structur untuk menu
+//Struktur untuk menu
 typedef struct
 {
     int code;
@@ -24,12 +24,13 @@ typedef struct
     char name[100];
 } menu;
 
-//structur pendapatan
+//struktur pendapatan
 typedef struct
 {
     int total;
 } price;
 
+//struktur untuk history
 typedef struct
 {
     char name2[100];
@@ -40,6 +41,7 @@ typedef struct
 price harga;
 menu item;
 history sell;
+
 //fungsi tampilan login
 void login()
 {
@@ -84,7 +86,7 @@ int main()
     mainmenu();
 }
 
-//Fungsi tampilan menu utama
+//Fungsi menu utama
 void mainmenu()
 {
     while(1){
@@ -279,7 +281,11 @@ void displaymenu2()
     while (fread(&item, sizeof(item), 1, file))
     {
         printf("\n\t\t\t\t\xdb\t%d\t\t", item.code);
-        printf("%s\t\xdb\n", item.name);
+        printf("%s\t", item.name);
+        if (strlen(item.name) < 8)
+            printf("\t\xdb\n");
+        else
+            printf("\xdb\n");
     }
     printf("\n\t\t\t\t\xdb    Masukkan \"0\" untuk hitung total\t\xdb");
     printf("\n\t\t\t\t\xdb    Masukkan \"100\" untuk keluar\t\xdb");
@@ -295,21 +301,20 @@ void displaytotal()
     int total_sell = 0, total_quantity = 0;
     file2 = fopen("total.txt","r");
     file3 = fopen("history.txt", "r");
-    // while (fread(&harga, sizeof(harga), 1, file2))
-    // {
-    //     printf("\n\t\t\t\tPendapatan : Rp. %d", harga.total);
-    // }
     showtime();
     printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
     rewind(file3);
     while (fread(&sell, sizeof(sell), 1, file3))
     {
-        printf("\n\t\t\t%s\t%d\t=\tRp. %d ( %dK )", sell.name2, sell.quantity, sell.total3, sell.total3/1000);
+        printf("\n\t\t\t%s\t", sell.name2);
+        if (strlen(sell.name2) < 8)
+            printf("\t");
+        printf("%d\t=\tRp. %d ( %dK )", sell.quantity, sell.total3, sell.total3/1000);
         total_sell += sell.total3;
         total_quantity += sell.quantity;
     }
-    printf("\n\n\t\t\t=============================================");
-    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d ( %dK)",total_quantity, total_sell, total_sell/1000);
+    printf("\n\n\t\t\t======================================================");
+    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
     fclose(file3);
     fclose(file2);
     printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
@@ -321,7 +326,6 @@ void displaytotal()
 //Fungsi untuk mereset jumlah pendapatan dan total pendapatan
 void reset()
 {
-    // FILE *file2, *file3;
     char reset[10];
     printf("\n\n\n\t\t\t\t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     printf("\n\n\n\t\t\t\t\tReset data (ketik \"reset\" untuk reset)");
@@ -353,10 +357,11 @@ void reset()
 
 void showtime()
 {
-  time_t rawtime;
-  struct tm * timeinfo;
+    char date[100];
+    time_t rawtime;
+    struct tm * timeinfo;
 
-  time (&rawtime);
-  timeinfo = localtime (&rawtime);
-  printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
 }
