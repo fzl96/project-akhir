@@ -288,27 +288,26 @@ void displaymenu2()
 void displaytotal()
 {
     FILE *file2, *file3;
-    int total_sell = 0;
+    int total_sell = 0, total_quantity = 0;
     file2 = fopen("total.txt","r");
     file3 = fopen("history.txt", "r");
     // while (fread(&harga, sizeof(harga), 1, file2))
     // {
     //     printf("\n\t\t\t\tPendapatan : Rp. %d", harga.total);
     // }
-    printf("\n\t\t\tNama Item\tJumlah\tTotal");
+    printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
     rewind(file3);
     while (fread(&sell, sizeof(sell), 1, file3))
     {
-        printf("\n\t\t\t %s\t%d\t= Rp. %d", sell.name2, sell.quantity, sell.total3);
-        // if(EOF)
-        //     printf("Works");
+        printf("\n\t\t\t%s\t%d\t=\tRp. %d", sell.name2, sell.quantity, sell.total3);
         total_sell += sell.total3;
+        total_quantity += sell.quantity;
     }
-    printf("\n\n\t\t\tTotal = %d", total_sell);
-    printf("\n");
+    printf("\n\n\t\t\t=============================================");
+    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d",total_quantity, total_sell);
     fclose(file3);
     fclose(file2);
-    printf("\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
+    printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
     system("cls");
     mainmenu();
