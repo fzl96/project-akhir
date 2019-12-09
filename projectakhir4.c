@@ -151,7 +151,7 @@ void calculate()
     FILE *file, *file2, *file3;
     file = fopen("menulist11.txt", "r");
     file2 = fopen("total.txt","a+");
-    file3 = fopen("history.txt", "a+");
+    file3 = fopen("history.txt", "ab");
     do{
         system("cls");
         displaymenu2();
@@ -197,6 +197,7 @@ void calculate()
 
     fclose(file);
     fclose(file2);
+    fclose(file3);
     printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
     system("cls");
