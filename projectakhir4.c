@@ -39,7 +39,6 @@ typedef struct
     int total3;
 } history;
 
-price harga;
 menu item;
 history sell;
 
