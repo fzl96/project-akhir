@@ -92,21 +92,24 @@ void mainmenu()
 {
     while(1){
         int choice;
-        printf("\n\n\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t1. Hitung                          \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t2. Tambah Menu                     \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t3. Tampilkan Daftar Menu           \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t4. Tampilkan Total dan History     \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t5. Reset Total Pendapatan          \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\t6. Keluar                          \t\xdb");
-        printf("\n\t\t\t\xdb\t                                   \t\xdb");
-        printf("\n\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+        
+        char mainmenu[100][100] = 
+        {
+            "                               ", 
+            "Hitung                         ", 
+            "Tambah Menu                    ", 
+            "Tampilkan Daftar Menu          ", 
+            "Tampilkan Total dan History    ",
+            "Reset Total Pendapatan         ",
+            "Keluar                         "
+        };
+        // printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb Program Kasir \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+        printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+        for (int i = 1; i < 7; i++)
+        {
+            printf("\t\t\t\t\xdb %d.%s\t\xdb\n\n", i, mainmenu[i]);
+        }
+        printf("\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
         printf("\n\n\t\t\t\tPilih Opsi : ");
         scanf("%d", &choice);
         switch (choice)
