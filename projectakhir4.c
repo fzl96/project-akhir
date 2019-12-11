@@ -13,23 +13,16 @@ void addmenu();
 void displaymenu();
 void displaymenu2();
 void displaytotal();
-void totalearn();
 void reset();
 void showtime();
 
-//Struktur untuk menu
+//Struktur untuk menu item
 typedef struct
 {
-    int code;
+    int code; //code item
     int price;
     char name[100];
 } menu;
-
-//struktur pendapatan
-typedef struct
-{
-    int total;
-} price;
 
 //struktur untuk history
 typedef struct
@@ -39,8 +32,8 @@ typedef struct
     int total3;
 } history;
 
-menu item;
-history sell;
+menu item; //deklarasi item dengan struktur menu
+history sell; //deklarasi sell dengan struktur history
 
 //fungsi tampilan login
 void login()
@@ -89,20 +82,19 @@ int main()
 //Fungsi menu utama
 void mainmenu()
 {
+    int choice;
+    //list main menu    
+    char mainmenu[100][100] = 
+    {
+        "                               ", 
+        "Hitung                         ", 
+        "Tambah Menu                    ", 
+        "Tampilkan Daftar Menu          ", 
+        "Tampilkan Total dan History    ",
+        "Reset Total Pendapatan         ",
+        "Keluar                         "
+    };
     while(1){
-        int choice;
-        
-        char mainmenu[100][100] = 
-        {
-            "                               ", 
-            "Hitung                         ", 
-            "Tambah Menu                    ", 
-            "Tampilkan Daftar Menu          ", 
-            "Tampilkan Total dan History    ",
-            "Reset Total Pendapatan         ",
-            "Keluar                         "
-        };
-        // printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb Program Kasir \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
         printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
         for (int i = 1; i < 7; i++)
         {
@@ -152,19 +144,19 @@ void calculate()
     int code, quantity, total, total2 = 0, money, change;
     char ulang;
     FILE *file, *file2;
-    file = fopen("menulist11.txt", "r");
-    file2 = fopen("history.txt", "a+");
+    file = fopen("menulist11.txt", "r"); //buka file menulist11.txt untuk dibaca
+    file2 = fopen("history.txt", "a+"); //buka file history.txt untuk ditulis
     do{
         system("cls");
-        displaymenu2();
+        displaymenu2(); //panggil fungsi displaymenu2
         while (1)
         {
             printf("\n\n\t\t\t\tMasukkan Code Item : ");
             scanf("%d", &code);
             if (code == 0)
-                break;
+                break; //keluar while loop
             else if (code == 100)
-                break;
+                break; //keluar while loop
             printf("\t\t\t\tMasukkan jumlah : ");
             scanf("%d", &quantity);
             rewind(file);
@@ -184,18 +176,16 @@ void calculate()
             }
         }
         if (code == 100)
-            break;
+            break; //keluar do-while loop
         printf("\n\t\t\t\t=============Total = %d=============", total2);
         printf("\n\n\t\t\t\tMasukkan jumlah uang pelanggan : Rp. ");
         scanf("%d", &money);
         change = money - total2;
         printf("\n\t\t\t\t=========Kembalian : Rp. %d=========", change);
-        harga.total = total2;
         total = 0, total2 = 0;
         printf("\n\n\t\t\t\tHitung Lagi (y/n) ? ");
         scanf(" %c", &ulang);
     }while(ulang == 'y' | ulang == 'Y');
-
     fclose(file);
     fclose(file2);
     printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
@@ -207,32 +197,28 @@ void calculate()
 //fungsi untuk menambah menu item
 void addmenu()
 {
-    char x, add;
+    char add;
     FILE *file;
-    file = fopen("menulist11.txt", "a+");
+    file = fopen("menulist11.txt", "a+"); //buka file menulist11.txt untuk ditulis
     while (1)
     {
-        printf("\n\t\t\t\t masukkan \"0\" pada code item atau \n\t\t\t\t\"batalkan\" pada nama item untuk membatalkan");
+        printf("\n\t\t\t\t masukkan \"0\" pada code item atau harga, atau \n\t\t\t\t\"batalkan\" pada nama item untuk membatalkan");
         printf("\n\n\n\t\t\t\t==================== Masukkan Code Item ====================");
         printf("\n\t\t\t\t> ");
         scanf("%d", &item.code);
         if (item.code == 0)
-        {
-            system("cls");
-            mainmenu();
-        }
+            break;
         fflush(stdin);
-        printf("\n\n\t\t\t\t==================== Masukkan nama Item ====================");
+        printf("\n\n\t\t\t\t==================== Masukkan Nama Item ====================");
         printf("\n\t\t\t\t> ");
         gets(item.name);
         if (strcmp(item.name, "batalkan") == 0)
-        {
-            system("cls");
-            mainmenu();
-        }
+            break;
         printf("\n\n\t\t\t\t==================== Masukkan Harga Item ====================");
         printf("\n\t\t\t\t> ");
         scanf("%d", &item.price);
+        if (item.price == 0)
+            break;
         fwrite(&item, sizeof(item), 1, file);
         printf("\n\n\t\t\t\tTambah item lagi (Y/N) ? ");
         add = getch();
@@ -283,8 +269,8 @@ void displaymenu2()
     {
         printf("\n\t\t\t\t\xdb\t%d\t\t", item.code);
         printf("%s\t", item.name);
-        if (strlen(item.name) < 8)
-            printf("\t\xdb\n");
+        if (strlen(item.name) < 8) 
+            printf("\t\xdb\n"); //merapikan tulisan saat ditampilkan
         else
             printf("\xdb\n");
     }
@@ -300,8 +286,8 @@ void displaytotal()
 {
     FILE *file2;
     int total_sell = 0, total_quantity = 0;
-    file2 = fopen("history.txt", "r");
-    showtime();
+    file2 = fopen("history.txt", "r"); //buka file history.txt untuk dibaca
+    // showtime();
     printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
     rewind(file2);
     while (fread(&sell, sizeof(sell), 1, file2))
@@ -335,7 +321,7 @@ void reset()
     if (strcmp(reset, "reset") == 0)
     {
         remove("history.txt");
-        printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DI RESET---!!!!!!!!!!!!!!!!!");
+        printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DIRESET---!!!!!!!!!!!!!!!!!");
         printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . . ");
         getch();
         system("cls");
@@ -353,13 +339,13 @@ void reset()
     }
 }
 
-void showtime()
-{
-    char date[100];
-    time_t rawtime;
-    struct tm * timeinfo;
+// void showtime()
+// {
+//     char date[100];
+//     time_t rawtime;
+//     struct tm * timeinfo;
 
-    time (&rawtime);
-    timeinfo = localtime (&rawtime);
-    printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
-}
+//     time (&rawtime);
+//     timeinfo = localtime (&rawtime);
+//     printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+// }
