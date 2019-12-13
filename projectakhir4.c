@@ -249,7 +249,7 @@ void displaymenu()
         printf("\n\t\t______________________________________________________________________");
     }
 
-    printf("\n");
+    // printf("\n");
     fclose(file);
     printf("\n\n\n\n\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
