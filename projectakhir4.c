@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <time.h>
-#include <locale.h>
+// #include <time.h>
 
 //Fungsi Prototype
 void mainmenu();
@@ -14,7 +13,7 @@ void displaymenu();
 void displaymenu2();
 void displaytotal();
 void reset();
-void showtime();
+// void showtime();
 
 //Struktur untuk menu item
 typedef struct
@@ -24,7 +23,6 @@ typedef struct
     char name[100];
 } menu;
 
-//struktur untuk history
 typedef struct
 {
     char name2[100];
@@ -45,10 +43,9 @@ void login()
         char uname[10], password[10];
         printf("\n\t\t====================== PLEASE LOGIN ======================");
         printf("\n\n\t\t\t\tEnter Username : ");
-        scanf("%s", &uname);
+        scanf("%s", uname);
         printf("\n\n\t\t\t\tEnter Password : ");
-        scanf("%s", &password);
-
+        scanf("%s", password);
         if (strcmp(uname, "user") == 0 && strcmp(password, "pass") == 0)
         {
             printf("\n\n\t\t\t\t\tLogin Success");
@@ -238,16 +235,18 @@ void displaymenu()
 {
     FILE *file;
     file = fopen("menulist11.txt", "r");
-    printf("\t\tCode Item\t\tNama Item\t\tHarga\n");
-    printf("\t\t______________________________________________________________");
+    printf("\t\tCode Item\t\tNama Item\t\t\tHarga\n");
+    printf("\t\t______________________________________________________________________");
     while (fread(&item, sizeof(item), 1, file))
     {
         printf("\n\t\t%d\t\t\t", item.code);
         printf("%s\t\t", item.name);
         if (strlen(item.name) < 8)
+            printf("\t\t");
+        else if (strlen(item.name) < 15)
             printf("\t");
         printf("%d ( %dK )", item.price, item.price/1000);
-        printf("\n\t\t______________________________________________________________");
+        printf("\n\t\t______________________________________________________________________");
     }
 
     printf("\n");
@@ -263,20 +262,22 @@ void displaymenu2()
 {
     FILE *file;
     file = fopen("menulist11.txt", "r");
-    printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
-    printf("\n\t\t\t\t\xdb\tCode Item\tNama Item\t\xdb\n");
+    printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+    printf("\n\t\t\t\t\xdb\tCode Item\tNama Item\t\t\xdb\n");
     while (fread(&item, sizeof(item), 1, file))
     {
         printf("\n\t\t\t\t\xdb\t%d\t\t", item.code);
         printf("%s\t", item.name);
         if (strlen(item.name) < 8) 
-            printf("\t\xdb\n"); //merapikan tulisan saat ditampilkan
+            printf("\t\t\xdb\n"); //merapikan tulisan saat ditampilkan
+        else if(strlen(item.name) < 15)
+            printf("\t\xdb\n");
         else
             printf("\xdb\n");
     }
-    printf("\n\t\t\t\t\xdb    Masukkan \"0\" untuk hitung total\t\xdb");
-    printf("\n\t\t\t\t\xdb    Masukkan \"100\" untuk keluar\t\xdb");
-    printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+    printf("\n\t\t\t\t\xdb\tMasukkan \"0\" untuk hitung total\t\t\xdb");
+    printf("\n\t\t\t\t\xdb\tMasukkan \"100\" untuk keluar\t\t\xdb");
+    printf("\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
     printf("\n");
     fclose(file);
 }
@@ -288,12 +289,14 @@ void displaytotal()
     int total_sell = 0, total_quantity = 0;
     file2 = fopen("history.txt", "r"); //buka file history.txt untuk dibaca
     // showtime();
-    printf("\n\t\t\tNama Item\tJumlah\t\tTotal\n");
+    printf("\n\t\t\tNama Item\t\tJumlah\t\tTotal\n");
     rewind(file2);
     while (fread(&sell, sizeof(sell), 1, file2))
     {
         printf("\n\t\t\t%s\t", sell.name2);
         if (strlen(sell.name2) < 8)
+            printf("\t\t");
+        else if (strlen(sell.name2) < 15)
             printf("\t");
         printf("%d\t=\tRp. %d ( %dK )", sell.quantity, sell.total3, sell.total3/1000);
         total_sell += sell.total3;
