@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-// #include <time.h>
 
 //Fungsi Prototype
 void mainmenu();
@@ -303,7 +302,7 @@ void displaytotal()
         total_quantity += sell.quantity;
     }
     printf("\n\n\t\t\t======================================================");
-    printf("\n\n\t\t\tTotal item\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
+    printf("\n\n\t\t\tTotal item\t\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
     fclose(file2);
     printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
