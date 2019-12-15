@@ -12,9 +12,10 @@ void addmenu();
 void displaymenu();
 void displaymenu2();
 void displaytotal();
+void displayAllHistory();
 void edit();
 void reset();
-void showtime();
+void showDate();
 
 //Struktur untuk menu item
 typedef struct
@@ -29,6 +30,14 @@ typedef struct
     char name2[100];
     int quantity;
     int total3;
+    int year;
+    int month;
+    int day;
+    int year2;
+    int month2;
+    int day2;
+    int totalSell;
+    int totalQuantity;
 } history;
 
 menu item; //deklarasi item dengan struktur menu
@@ -84,23 +93,24 @@ void mainmenu()
     //list main menu    
     char *mainmenu[] = 
     {
-        "                               ", 
-        "Hitung                         ", 
-        "Tambah Menu                    ", 
-        "Tampilkan Daftar Menu          ", 
-        "Tampilkan Total dan History    ",
-        "Edit                           ",
-        "Reset Total Pendapatan         ",
-        "Keluar                         "
+        "                                       ", 
+        "Hitung                                 ", 
+        "Tambah Menu                            ", 
+        "Daftar Menu                            ", 
+        "Total dan History                      ",
+        "History Pendapatan yang telah di-reset ",
+        "Edit                                   ",
+        "Reset Total Pendapatan                 ",
+        "Keluar                                 "
     };
     countArray = sizeof(mainmenu)/sizeof(mainmenu[0]);
     while(1){
-        printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+        printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
         for (int i = 1; i < countArray; i++)
         {
             printf("\t\t\t\t\xdb %d.%s\t\xdb\n\n", i, mainmenu[i]);
         }
-        printf("\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
+        printf("\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb");
         printf("\n\n\t\t\t\tPilih Opsi : ");
         scanf("%d", &choice);
         switch (choice)
@@ -123,14 +133,18 @@ void mainmenu()
             break;
         case 5:
             system("cls");
-            edit();
+            displayAllHistory();
             break;
         case 6:
             system("cls");
-            reset();
+            edit();
             break;
         case 7:
             system("cls");
+            reset();
+            break;
+        case 8:
+            system("Cls");
             break;
         default:
             printf("\n\n\t\t\t\t!!!Menu Tidak ada!!!");
@@ -147,6 +161,8 @@ void calculate()
 {
     int code, quantity, total, total2 = 0, money, change;
     char ulang;
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
     FILE *file, *file2;
     file = fopen("menulist11.txt", "r"); //buka file menulist11.txt untuk dibaca
     file2 = fopen("history.txt", "a+"); //buka file history.txt untuk ditulis
@@ -169,10 +185,13 @@ void calculate()
                 if (item.code == code)
                 {
                     total = item.price * quantity;
-                    printf("\n\t\t\t\t%s %d = Rp. %d", item.name, quantity, total);
+                    printf("\n\t\t\t\t%s %d = Rp. %d ( %dK )", item.name, quantity, total, total/1000);
                     strcpy(sell.name2, item.name);
                     sell.quantity = quantity;
                     sell.total3 = total;
+                    sell.year = tm.tm_year + 1900;
+                    sell.month = tm.tm_mon + 1;
+                    sell.day = tm.tm_mday;
                     fwrite(&sell, sizeof(sell), 1, file2);
                     total2 = total2 + total;
                     break;
@@ -181,11 +200,11 @@ void calculate()
         }
         if (code == 100)
             break; //keluar do-while loop
-        printf("\n\t\t\t\t=============Total = %d=============", total2);
+        printf("\n\t\t\t\t=============Total = %d ( %dK )=============", total2, total2/1000);
         printf("\n\n\t\t\t\tMasukkan jumlah uang pelanggan : Rp. ");
         scanf("%d", &money);
         change = money - total2;
-        printf("\n\t\t\t\t=========Kembalian : Rp. %d=========", change);
+        printf("\n\t\t\t\t=========Kembalian : Rp. %d ( %dK )=========", change, change/1000);
         total = 0, total2 = 0;
         printf("\n\n\t\t\t\tHitung Lagi (y/n) ? ");
         scanf(" %c", &ulang);
@@ -295,12 +314,13 @@ void displaytotal()
     FILE *file2;
     int total_sell = 0, total_quantity = 0;
     file2 = fopen("history.txt", "r"); //buka file history.txt untuk dibaca
-    // showtime();
-    printf("\n\t\t\tNama Item\t\tJumlah\t\tTotal\n");
+    showDate();
+    printf("\n\t\tTanggal\t\t\tNama Item\t\tJumlah\t\tTotal\n");
     rewind(file2);
     while (fread(&sell, sizeof(sell), 1, file2))
     {
-        printf("\n\t\t\t%s\t", sell.name2);
+        printf("\n\t\t%d-%d-%d", sell.year, sell.month, sell.day);
+        printf("\t\t%s\t", sell.name2);
         if (strlen(sell.name2) < 8)
             printf("\t\t");
         else if (strlen(sell.name2) < 15)
@@ -309,8 +329,9 @@ void displaytotal()
         total_sell += sell.total3;
         total_quantity += sell.quantity;
     }
-    printf("\n\n\t\t\t======================================================");
-    printf("\n\n\t\t\tTotal item\t\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
+    printf("\n\n\t\t=================================================================================");
+    printf("\n\n\t\t%d-%d-%d", sell.year, sell.month, sell.day);
+    printf("\t\tTotal item\t\t%d\t=\tRp. %d ( %dK )",total_quantity, total_sell, total_sell/1000);
     fclose(file2);
     printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
     getch();
@@ -318,6 +339,22 @@ void displaytotal()
     mainmenu();
 }
 
+void displayAllHistory()
+{
+    FILE *file3;
+    file3 = fopen("allHistory.txt", "r"); //buka file history.txt untuk dibaca
+    printf("\n\n\t\t\tTanggal\t\t\tTotal Item\t\tTotal Pendapatan");
+    while (fread(&sell, sizeof(sell), 1, file3))
+    {
+        printf("\n\n\t\t\t%d-%d-%d", sell.year2, sell.month2, sell.day2);
+        printf("\t\t%d\t\t=\tRp. %d ( %dK )", sell.totalQuantity, sell.totalSell, sell.totalSell/1000);
+    }
+    fclose(file3);
+    printf("\n\n\n\n\n\t\t\tTekan apa saja untuk kembali ke menu utama. . .");
+    getch();
+    system("cls");
+    mainmenu();
+}
 //fungsi untuk mengedit item
 void edit()
 {
@@ -334,47 +371,51 @@ void edit()
     {
         if(item.code == x)
         {
-            printf("\n\n\n\t\t\t\tnama\t\t= %s",item.name);
-            printf("\n\t\t\t\tcode\t\t= %d",item.code);
-            printf("\n\t\t\t\tHarga\t\t= %d",item.price);
-            printf("\n\n\n\t\t\t\tEdit Menu ini (Y/N) ? ");
+            printf("\n\n\n\t\t\t\t\tNama Item\t= %s",item.name);
+            printf("\n\t\t\t\t\tCode Item\t= %d",item.code);
+            printf("\n\t\t\t\t\tHarga Item\t= %d",item.price);
+            printf("\n\n\n\t\t\t\t\tEdit Menu ini (Y/N) ? ");
             scanf(" %c", &edit);
             if (edit == 'y' || edit == 'Y')
             {
-                system("cls");
-                printf("\n\t\t\t\t1- Edit Nama ");
-                printf("\n\n\t\t\t\t2- Edit Code ");
-                printf("\n\n\t\t\t\t3- Edit Harga ");
-                printf("\n\n\t\t\t\tPilih Opsi : ");
+                printf("\n\t\t\t\t\t1- Edit Nama ");
+                printf("\n\n\t\t\t\t\t2- Edit Code ");
+                printf("\n\n\t\t\t\t\t3- Edit Harga ");
+                printf("\n\n\t\t\t\t\t4- Batalkan ");
+                printf("\n\n\t\t\t\t\tPilih Opsi : ");
                 scanf("%d",&choice);
                 switch(choice)
                 {
                     case 1:
-                        printf("\n\n\t\t\t\tEdit Item");
-                        printf("\n\n\t\t\t\tMasukkan nama baru : ");
-                        scanf("%s",item.name);
+                        printf("\n\n\t\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\t\tMasukkan nama baru : ");
+                        fflush(stdin);
+                        gets(item.name);
                         size=sizeof(item);
                         fseek(file,-size,SEEK_CUR);
                         fwrite(&item,sizeof(item),1,file);
                         break;
                     case 2:
-                        printf("\n\n\t\t\t\tEdit Item");
-                        printf("\n\n\t\t\t\tMasukkan code baru : ");
+                        printf("\n\n\t\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\t\tMasukkan code baru : ");
                         scanf("%d",item.code);
                         size=sizeof(item);
                         fseek(file,-size,SEEK_CUR);
                         fwrite(&item,sizeof(item),1,file);
                         break;
                     case 3:
-                        printf("\n\n\t\t\t\tEdit Item");
-                        printf("\n\n\t\t\t\tMasukkan harga baru: ");
+                        printf("\n\n\t\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\t\tMasukkan harga baru: ");
                         scanf("%d",&item.price);
                         size=sizeof(item);
                         fseek(file,-size,SEEK_CUR);
                         fwrite(&item,sizeof(item),1,file);
                         break;
+                    case 4:
+                        break;
                 }
-                printf("\n\n\n\n\n\t\t\t\t---Item diedit---");
+                if (choice == 4) break;
+                printf("\n\n\t\t\t\t---Item diedit---");
                 getch();
                 break;
             }
@@ -388,6 +429,10 @@ void edit()
 //Fungsi untuk mereset jumlah pendapatan dan total pendapatan
 void reset()
 {
+    int total_sell = 0, total_quantity = 0;
+    FILE *file2, *file3;
+    file2 = fopen("history.txt", "r"); //buka file history.txt untuk dibaca
+    file3 = fopen("allHistory.txt", "a+");
     char reset[10];
     printf("\n\n\n\t\t\t\t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     printf("\n\n\n\t\t\t\t\tReset data (ketik \"reset\" untuk reset)");
@@ -397,8 +442,22 @@ void reset()
     scanf("%s", reset);
     if (strcmp(reset, "reset") == 0)
     {
+        while (fread(&sell, sizeof(sell), 1, file2))
+        {
+            total_sell += sell.total3;
+            total_quantity += sell.quantity;
+
+        }
+        sell.totalSell = total_sell;
+        sell.totalQuantity = total_quantity;
+        sell.year2 = sell.year;
+        sell.month2 = sell.month;
+        sell.day2 = sell.day;
+        fwrite(&sell, sizeof(sell), 1, file3);
+        fclose(file2);
         remove("history.txt");
         printf("\n\n\t\t\t\t!!!!!!!!!!!!!!!!!---DATA DIRESET---!!!!!!!!!!!!!!!!!");
+        fclose(file3);
         printf("\n\n\t\t\t\tTekan apa saja untuk kembali ke menu utama. . . ");
         getch();
         system("cls");
@@ -416,13 +475,16 @@ void reset()
     }
 }
 
-void showtime()
+void showDate()
 {
-    char date[100];
-    time_t rawtime;
-    struct tm * timeinfo;
+    // char date[100];
+    // time_t rawtime;
+    // struct tm * timeinfo;
 
-    time (&rawtime);
-    timeinfo = localtime (&rawtime);
-    printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+    // time (&rawtime);
+    // timeinfo = localtime (&rawtime);
+    // printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    printf("\t\t\t\t\tSekarang: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1,tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 }
