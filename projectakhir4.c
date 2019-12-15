@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <time.h>
 
 //Fungsi Prototype
 void mainmenu();
@@ -11,8 +12,9 @@ void addmenu();
 void displaymenu();
 void displaymenu2();
 void displaytotal();
+void edit();
 void reset();
-// void showtime();
+void showtime();
 
 //Struktur untuk menu item
 typedef struct
@@ -78,21 +80,23 @@ int main()
 //Fungsi menu utama
 void mainmenu()
 {
-    int choice;
+    int choice, countArray;
     //list main menu    
-    char mainmenu[100][100] = 
+    char *mainmenu[] = 
     {
         "                               ", 
         "Hitung                         ", 
         "Tambah Menu                    ", 
         "Tampilkan Daftar Menu          ", 
         "Tampilkan Total dan History    ",
+        "Edit                           ",
         "Reset Total Pendapatan         ",
         "Keluar                         "
     };
+    countArray = sizeof(mainmenu)/sizeof(mainmenu[0]);
     while(1){
         printf("\n\n\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
-        for (int i = 1; i < 7; i++)
+        for (int i = 1; i < countArray; i++)
         {
             printf("\t\t\t\t\xdb %d.%s\t\xdb\n\n", i, mainmenu[i]);
         }
@@ -119,9 +123,13 @@ void mainmenu()
             break;
         case 5:
             system("cls");
-            reset();
+            edit();
             break;
         case 6:
+            system("cls");
+            reset();
+            break;
+        case 7:
             system("cls");
             break;
         default:
@@ -310,6 +318,73 @@ void displaytotal()
     mainmenu();
 }
 
+//fungsi untuk mengedit item
+void edit()
+{
+    system("cls");
+    FILE *file;
+    char edit;
+    int x, choice, size;
+    printf("\n\n\t\t\t\t=============EDIT MENU ITEM=============");
+    printf("\n\n\t\t\t\tMasukkan code item yang ingin diedit: ");
+    scanf("%d", &x);
+    file=fopen("menulist11.txt","r+b");
+    rewind(file);
+    while (fread(&item,sizeof (item),1,file))
+    {
+        if(item.code == x)
+        {
+            printf("\n\n\n\t\t\t\tnama\t\t= %s",item.name);
+            printf("\n\t\t\t\tcode\t\t= %d",item.code);
+            printf("\n\t\t\t\tHarga\t\t= %d",item.price);
+            printf("\n\n\n\t\t\t\tEdit Menu ini (Y/N) ?:");
+            scanf(" %c", &edit);
+            if (edit == 'y' || edit == 'Y')
+            {
+                system("cls");
+                printf("\n\t\t\t\t1- Edit Nama ");
+                printf("\n\n\t\t\t\t2- Edit Code ");
+                printf("\n\n\t\t\t\t3- Edit Harga ");
+                printf("\n\n\t\t\t\tPilih Opsi : ");
+                scanf("%d",&choice);
+                switch(choice)
+                {
+                    case 1:
+                        printf("\n\n\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\tMasukkan nama baru : ");
+                        scanf("%s",item.name);
+                        size=sizeof(item);
+                        fseek(file,-size,SEEK_CUR);
+                        fwrite(&item,sizeof(item),1,file);
+                        break;
+                    case 2:
+                        printf("\n\n\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\tMasukkan code baru : ");
+                        scanf("%d",item.code);
+                        size=sizeof(item);
+                        fseek(file,-size,SEEK_CUR);
+                        fwrite(&item,sizeof(item),1,file);
+                        break;
+                    case 3:
+                        printf("\n\n\t\t\t\tEdit Item");
+                        printf("\n\n\t\t\t\tMasukkan harga baru: ");
+                        scanf("%d",&item.price);
+                        size=sizeof(item);
+                        fseek(file,-size,SEEK_CUR);
+                        fwrite(&item,sizeof(item),1,file);
+                        break;
+                }
+                printf("\n\n\n\n\n\t\t\t\t---Item diedit---");
+                getch();
+                break;
+            }
+        }
+    }
+    fclose(file);
+    system("cls");
+    mainmenu();
+}
+
 //Fungsi untuk mereset jumlah pendapatan dan total pendapatan
 void reset()
 {
@@ -341,13 +416,13 @@ void reset()
     }
 }
 
-// void showtime()
-// {
-//     char date[100];
-//     time_t rawtime;
-//     struct tm * timeinfo;
+void showtime()
+{
+    char date[100];
+    time_t rawtime;
+    struct tm * timeinfo;
 
-//     time (&rawtime);
-//     timeinfo = localtime (&rawtime);
-//     printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
-// }
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    printf ("\n\n\t\t\tTanggal dan waktu : %s", asctime(timeinfo));
+}
