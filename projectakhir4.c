@@ -337,7 +337,7 @@ void edit()
             printf("\n\n\n\t\t\t\tnama\t\t= %s",item.name);
             printf("\n\t\t\t\tcode\t\t= %d",item.code);
             printf("\n\t\t\t\tHarga\t\t= %d",item.price);
-            printf("\n\n\n\t\t\t\tEdit Menu ini (Y/N) ?:");
+            printf("\n\n\n\t\t\t\tEdit Menu ini (Y/N) ? ");
             scanf(" %c", &edit);
             if (edit == 'y' || edit == 'Y')
             {
